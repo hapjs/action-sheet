@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Pushbutton</title>
+    <script src="build/pushbutton.min.js"></script>
+</head>
+
+<body>
+    <style type="text/css">
+        #pushbuttonClick,
+        #refresh {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            margin-top: -50px;
+            font-size: 30px;
+            text-align: center;
+            color: #333;
+        }
+        
+        #refresh {
+            margin-top: -100px;
+        }
+        
+        #pushbuttonClick:active {
+            color: #000;
+        }
+    </style>
+    <a href="javascript:void(0);" id="refresh">click refresh</a>
+    <a href="javascript:void(0);" id="pushbuttonClick">click show Pushbutton</a>
+    <section id="pushbutton"></section>
+    <script>
+
+        var pub = new Pushbutton('#pushbutton', {
+            data: [
+                {text:'拍照', cls: 'takePictures', attr: {'data-key': 'takePictures'} },
+                {text:'录像', attr: [
+                    {key1: 'video1'},
+                    {key2: 'video2'}
+                ]},
+                {text:'语音录入'}
+            ],
+            // 点击回调 返回true 则不隐藏弹出框
+            onClick: function( e ) {
+                console.log(e);
+                // 返回主要有用数据
+                // e.target  当前dom节点
+                // e.data  当前点击的data
+                // e.index  当前点击的选择是第几个
+                return true;
+            },
+            // maxHeight: 100,  // 默认显示的高度
+            isShow: true   // 默认是否显示
+        });
+
+        var dom = document.getElementById("pushbuttonClick");
+        var refresh = document.getElementById("refresh");
+
+        dom.onclick = function () {
+            pub.show();
+        }
+
+        refresh.onclick = function () {
+            pub.refresh({
+                data: [{text: 'refreshrefreshrefreshrefreshrefreshrefreshrefreshrefreshrefreshrefreshrefreshrefresh'}]
+            });
+        }
+    </script>
+</body>
+
+</html>

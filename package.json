@@ -1,0 +1,33 @@
+{
+  "name": "pushbuttonjs",
+  "version": "1.0.1",
+  "description": "http://gtdalp.github.io/pushbutton/demos/pushbutton.html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtdalp/pushbutton.git"
+  },
+  "author": "xisa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gtdalp/pushbutton/issues"
+  },
+  "homepage": "https://github.com/gtdalp/pushbutton#readme",
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.8.0",
+    "babel-plugin-transform-es2015-classes": "^6.18.0",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-preset-es2015": "^6.14.0",
+    "rollup": "^0.34.13",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-postcss": "^0.2.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "tethys": "0.0.3"
+  }
+}
