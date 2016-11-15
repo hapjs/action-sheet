@@ -1,13 +1,14 @@
-import './action-sheet.css';
+import './action-sheet.css'
 import $ from '../lib/tethys.js'
+import Tap from '../lib/tap.js'
 
 const tpl = 
-    `<div class="pb-container">
-        <div class="pb-cover"></div>
-        <div class="pb-buttons"></div>
-    </div>`;
+    '<div class="pb-container">\
+        <div class="pb-cover"></div>\
+        <div class="pb-buttons"></div>\
+    </div>';
 
-const buttonTpl = `<div class="pb-button">{text}</div>`;
+const buttonTpl = '<div class="pb-button">{text}</div>';
 
 var ActionSheet = function(opt){
 
@@ -19,6 +20,11 @@ var ActionSheet = function(opt){
     // 渲染
     this.render().update(opt.buttons);
 };
+
+function ontap(el, fn){
+    new Tap(el);
+    el.addEventListener('tap', fn, false);
+}
 
 ActionSheet.prototype = {
 
@@ -32,7 +38,7 @@ ActionSheet.prototype = {
             height: doc.clientHeight + 'px'
         });
 
-        this.el.find('.pb-cover').on('click', this.hide.bind(this));
+        ontap(this.el.find('.pb-cover')[0], this.hide.bind(this));
 
         $('body').append(this.el);
         
@@ -59,11 +65,13 @@ ActionSheet.prototype = {
         
         Object.keys(buttons).forEach(function(key){
             var n = buttons[key],
-                dom = $($.tpl(buttonTpl, {
+                btn = $($.tpl(buttonTpl, {
                     text: key
                 }));
             //
-            dom.on('click', function(e){
+            ontap(btn[0], function(e){
+                e.stopPropagation();
+                e.preventDefault();
                 if(typeof this === 'function'){
                     this(e);
                 }else if(typeof this === 'string'){
@@ -71,7 +79,7 @@ ActionSheet.prototype = {
                 };
             }.bind(n));
 
-            buttonContainer.append(dom);
+            buttonContainer.append(btn);
         });
 
         return this;

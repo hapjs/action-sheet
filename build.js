@@ -22,4 +22,6 @@ rollup({
     moduleName: 'ActionSheet',
     format: 'umd'
   });
+}).catch(function(err){
+  console.log(err);
 });

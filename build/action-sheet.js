@@ -287,13 +287,137 @@ tethys.fn = {
 
 };
 
-const tpl = 
-    `<div class="pb-container">
-        <div class="pb-cover"></div>
-        <div class="pb-buttons"></div>
-    </div>`;
+/*!
+* tap.js
+* Copyright (c) 2015 Alex Gibson 
+* https://github.com/alexgibson/tap.js/
+* Released under MIT license
+*/
 
-const buttonTpl = `<div class="pb-button">{text}</div>`;
+function Tap(el) {
+    this.el = typeof el === 'object' ? el : document.getElementById(el);
+    this.moved = false; //flags if the finger has moved
+    this.startX = 0; //starting x coordinate
+    this.startY = 0; //starting y coordinate
+    this.hasTouchEventOccured = false; //flag touch event
+    this.el.addEventListener('touchstart', this, false);
+    this.el.addEventListener('mousedown', this, false);
+}
+
+// return true if left click is in the event, handle many browsers
+Tap.prototype.leftButton = function(event) {
+    // modern & preferred:  MSIE>=9, Firefox(all)
+    if ('buttons' in event) {
+        // https://developer.mozilla.org/docs/Web/API/MouseEvent/buttons
+        return event.buttons === 1;
+    } else {
+        return 'which' in event ?
+            // 'which' is well defined (and doesn't exist on MSIE<=8)
+            // https://developer.mozilla.org/docs/Web/API/MouseEvent/which
+            event.which === 1 :
+            // for MSIE<=8 button is 1=left (0 on all other browsers)
+            // https://developer.mozilla.org/docs/Web/API/MouseEvent/button
+            event.button === 1;
+    }
+};
+
+Tap.prototype.start = function(e) {
+    if (e.type === 'touchstart') {
+
+        this.hasTouchEventOccured = true;
+        this.el.addEventListener('touchmove', this, false);
+        this.el.addEventListener('touchend', this, false);
+        this.el.addEventListener('touchcancel', this, false);
+
+    } else if (e.type === 'mousedown' && this.leftButton(e)) {
+
+        this.el.addEventListener('mousemove', this, false);
+        this.el.addEventListener('mouseup', this, false);
+    }
+
+    this.moved = false;
+    this.startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    this.startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+};
+
+Tap.prototype.move = function(e) {
+    //if finger moves more than 10px flag to cancel
+    var x = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    var y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+    if (Math.abs(x - this.startX) > 10 || Math.abs(y - this.startY) > 10) {
+        this.moved = true;
+    }
+};
+
+Tap.prototype.end = function(e) {
+    var evt;
+
+    this.el.removeEventListener('touchmove', this, false);
+    this.el.removeEventListener('touchend', this, false);
+    this.el.removeEventListener('touchcancel', this, false);
+    this.el.removeEventListener('mouseup', this, false);
+    this.el.removeEventListener('mousemove', this, false);
+
+    if (!this.moved) {
+        //create custom event
+        try {
+            evt = new window.CustomEvent('tap', {
+                bubbles: true,
+                cancelable: true
+            });
+        } catch (e) {
+            evt = document.createEvent('Event');
+            evt.initEvent('tap', true, true);
+        }
+
+        //prevent touchend from propagating to any parent
+        //nodes that may have a tap.js listener attached
+        e.stopPropagation();
+
+        // dispatchEvent returns false if any handler calls preventDefault,
+        if (!e.target.dispatchEvent(evt)) {
+            // in which case we want to prevent clicks from firing.
+            e.preventDefault();
+        }
+    }
+};
+
+Tap.prototype.cancel = function() {
+    this.hasTouchEventOccured = false;
+    this.moved = false;
+    this.startX = 0;
+    this.startY = 0;
+};
+
+Tap.prototype.destroy = function() {
+    this.el.removeEventListener('touchstart', this, false);
+    this.el.removeEventListener('touchmove', this, false);
+    this.el.removeEventListener('touchend', this, false);
+    this.el.removeEventListener('touchcancel', this, false);
+    this.el.removeEventListener('mousedown', this, false);
+    this.el.removeEventListener('mouseup', this, false);
+    this.el.removeEventListener('mousemove', this, false);
+};
+
+Tap.prototype.handleEvent = function(e) {
+    switch (e.type) {
+        case 'touchstart': this.start(e); break;
+        case 'touchmove': this.move(e); break;
+        case 'touchend': this.end(e); break;
+        case 'touchcancel': this.cancel(e); break;
+        case 'mousedown': this.start(e); break;
+        case 'mouseup': this.end(e); break;
+        case 'mousemove': this.move(e); break;
+    }
+};
+
+const tpl = 
+    '<div class="pb-container">\
+        <div class="pb-cover"></div>\
+        <div class="pb-buttons"></div>\
+    </div>';
+
+const buttonTpl = '<div class="pb-button">{text}</div>';
 
 var ActionSheet = function(opt){
 
@@ -305,6 +429,11 @@ var ActionSheet = function(opt){
     // 渲染
     this.render().update(opt.buttons);
 };
+
+function ontap(el, fn){
+    new Tap(el);
+    el.addEventListener('tap', fn, false);
+}
 
 ActionSheet.prototype = {
 
@@ -318,7 +447,7 @@ ActionSheet.prototype = {
             height: doc.clientHeight + 'px'
         });
 
-        this.el.find('.pb-cover').on('click', this.hide.bind(this));
+        ontap(this.el.find('.pb-cover')[0], this.hide.bind(this));
 
         tethys('body').append(this.el);
         
@@ -345,11 +474,13 @@ ActionSheet.prototype = {
         
         Object.keys(buttons).forEach(function(key){
             var n = buttons[key],
-                dom = tethys(tethys.tpl(buttonTpl, {
+                btn = tethys(tethys.tpl(buttonTpl, {
                     text: key
                 }));
             //
-            dom.on('click', function(e){
+            ontap(btn[0], function(e){
+                e.stopPropagation();
+                e.preventDefault();
                 if(typeof this === 'function'){
                     this(e);
                 }else if(typeof this === 'string'){
@@ -357,7 +488,7 @@ ActionSheet.prototype = {
                 };
             }.bind(n));
 
-            buttonContainer.append(dom);
+            buttonContainer.append(btn);
         });
 
         return this;

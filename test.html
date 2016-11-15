@@ -14,6 +14,8 @@
     <p>
         The traditional way to parse a string to a DOM fragment is to set the string as the innerHTML value of an empty DIV element, then iterate through the DIV's child nodes, appending them to a new DocumentFragment instance. Like this:
     </p>
+
+    <button type="button" onclick="as.show()">show</button>
     
     <script>
         var as = new ActionSheet({
@@ -26,18 +28,18 @@
 
         as.show();
 
-        setTimeout(function(){
-            as.hide();
-        }, 1000);
+        // setTimeout(function(){
+        //     as.hide();
+        // }, 1000);
 
-        setTimeout(function(){
-            as.update({
-                '用户协议': function(e){
-                    console.info(e);
-                },
-                '百度': 'http://baidu.com',
-            }).show();
-        }, 2000);
+        // setTimeout(function(){
+        //     as.update({
+        //         '用户协议': function(e){
+        //             console.info(e);
+        //         },
+        //         '百度': 'http://baidu.com',
+        //     }).show();
+        // }, 2000);
     </script>
 </body>
 

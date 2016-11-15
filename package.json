@@ -1,22 +1,21 @@
 {
   "name": "action-sheet",
-  "version": "1.0.1",
-  "description": "http://gtdalp.github.io/pushbutton/demos/pushbutton.html",
+  "version": "0.0.1",
   "main": "action-sheet.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build"
+    "build": "node build && uglifyjs build/action-sheet.js -o build/action-sheet.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gtdalp/pushbutton.git"
+    "url": "git+https://github.com/hapjs/action-sheet.git"
   },
-  "author": "xisa",
+  "author": "hapjs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gtdalp/pushbutton/issues"
+    "url": "https://github.com/hapjs/action-sheet/issues"
   },
-  "homepage": "https://github.com/gtdalp/pushbutton#readme",
+  "homepage": "https://github.com/hapjs/action-sheet#readme",
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.8.0",
     "babel-plugin-transform-es2015-classes": "^6.18.0",
@@ -27,8 +26,6 @@
     "rollup-plugin-commonjs": "^5.0.5",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-postcss": "^0.2.0",
-    "rollup-plugin-uglify": "^1.0.1",
-    "rollup-watch": "^2.5.0",
-    "tethys": "0.0.3"
+    "rollup-plugin-uglify": "^1.0.1"
   }
 }
