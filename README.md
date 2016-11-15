@@ -2,6 +2,8 @@
 
 这是一个类似IOS中ActionSheet的按钮组控件。
 
+![效果图](docs/action-sheet.png)
+
 除了构造函数ActionSheet以外，它包含以下实例方法：
 
 * [show](#show)
