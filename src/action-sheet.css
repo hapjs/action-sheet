@@ -1,9 +1,6 @@
-html body{
-    margin: 0;
-}
 
 .pb-container{
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
 }
@@ -11,7 +8,7 @@ html body{
 .pb-cover{
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,.3);
+    background: rgba(0, 0, 0, .05);
 }
 
 .pb-buttons{
@@ -25,6 +22,35 @@ html body{
     background: #FFF;
     padding: 10px;
     border-radius: 5px;
-    margin: 2px;
+    margin: 5px;
     text-align: center;
+}
+
+
+.pb-in .pb-buttons{
+    animation: pb-easein .30s forwards;
+    -webkit-animation: pb-easein .30s forwards;
+}
+
+.pb-out .pb-buttons{
+    animation: pb-easeout .30s forwards;
+    -webkit-animation: pb-easeout .30s forwards;
+}
+
+@keyframes pb-easein{
+	from {
+		transform: translate(0, 100%) translateZ(0);
+	}
+	to {
+		transform: translate(0, 0) translateZ(0);
+	}
+}
+
+@keyframes pb-easeout{
+	from {
+		transform: translate(0, 0) translateZ(0);
+	}
+	to {
+		transform: translate(0, 100%) translateZ(0);
+	}
 }

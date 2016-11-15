@@ -20,7 +20,7 @@ function __$styleInject(css, returnValue) {
   head.appendChild(style);
   return returnValue;
 }
-__$styleInject("html body{\n    margin: 0;\n}\n\n.pb-container{\n    position: fixed;\n    left: 0;\n    top: 0;\n}\n\n.pb-cover{\n    width: 100%;\n    height: 100%;\n    background: rgba(0,0,0,.3);\n}\n\n.pb-buttons{\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n}\n\n.pb-button{\n    background: #FFF;\n    padding: 10px;\n    border-radius: 5px;\n    margin: 2px;\n    text-align: center;\n}",undefined);
+__$styleInject("\n.pb-container{\n    position: absolute;\n    left: 0;\n    top: 0;\n}\n\n.pb-cover{\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, .05);\n}\n\n.pb-buttons{\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n}\n\n.pb-button{\n    background: #FFF;\n    padding: 10px;\n    border-radius: 5px;\n    margin: 5px;\n    text-align: center;\n}\n\n\n.pb-in .pb-buttons{\n    animation: pb-easein .30s forwards;\n    -webkit-animation: pb-easein .30s forwards;\n}\n\n.pb-out .pb-buttons{\n    animation: pb-easeout .30s forwards;\n    -webkit-animation: pb-easeout .30s forwards;\n}\n\n@keyframes pb-easein{\n\tfrom {\n\t\ttransform: translate(0, 100%) translateZ(0);\n\t}\n\tto {\n\t\ttransform: translate(0, 0) translateZ(0);\n\t}\n}\n\n@keyframes pb-easeout{\n\tfrom {\n\t\ttransform: translate(0, 0) translateZ(0);\n\t}\n\tto {\n\t\ttransform: translate(0, 100%) translateZ(0);\n\t}\n}",undefined);
 
 function keyValue(args, getter, setter){
     var attrs = {}, 
@@ -423,20 +423,24 @@ var ActionSheet = function(opt){
 
     // 默认参数
     opt = tethys.extend({
-        buttons: {}
+        buttons: {},
+        inTime: 500,
+        outTime: 500
     }, opt);
     
     // 渲染
     this.render().update(opt.buttons);
 };
 
-function ontap(el, fn){
+// 绑定点击事件
+function bindTapEvent(el, fn){
     new Tap(el);
     el.addEventListener('tap', fn, false);
 }
 
 ActionSheet.prototype = {
 
+    // 初始化渲染
     render: function(){
         var doc = document.documentElement;
 
@@ -447,49 +451,74 @@ ActionSheet.prototype = {
             height: doc.clientHeight + 'px'
         });
 
-        ontap(this.el.find('.pb-cover')[0], this.hide.bind(this));
+        bindTapEvent(this.el.find('.pb-cover')[0], this.hide.bind(this));
 
         tethys('body').append(this.el);
         
         return this;
     },
 
+    // 显示
     show: function(){
 
+
         this.el.show();
+        this.el.addClass('pb-in');
+
+        setTimeout(function(){
+            this.el.removeClass('pb-in');
+        }.bind(this), 350);
+
         return this;
     },
 
+    // 隐藏
     hide: function(){
-        this.el.hide();
+
+        this.el.addClass('pb-out');
+
+        setTimeout(function(){
+            this.el.removeClass('pb-out').hide();
+        }.bind(this), 300);
+        
         return this;
     },
 
+    // 更新按钮
     update: function(buttons){
         var buttonContainer = this.el.find('.pb-buttons');
 
+        // 清空按钮容器
         buttonContainer.html('');
 
+        // 添加取消按钮
         buttons['取消'] = this.hide.bind(this);
         
+        // 遍历创建按钮
         Object.keys(buttons).forEach(function(key){
             var n = buttons[key],
                 btn = tethys(tethys.tpl(buttonTpl, {
                     text: key
                 }));
-            //
-            ontap(btn[0], function(e){
+
+            // 绑定tap事件
+            bindTapEvent(btn[0], function(e){
+
                 e.stopPropagation();
                 e.preventDefault();
-                if(typeof this === 'function'){
-                    this(e);
-                }else if(typeof this === 'string'){
-                    location.href = this;
+                
+                // 如果参数是函数则调用
+                // 如果是字符串则认为是url直接跳转
+                if(typeof this.action === 'function'){
+                    this.action.call(this.context, e);
+                }else if(typeof this.action === 'string'){
+                    location.href = this.action;
                 };
-            }.bind(n));
+            }.bind({action: n, context: this}));
 
+            // 添加到按钮容器
             buttonContainer.append(btn);
-        });
+        }.bind(this));
 
         return this;
     }

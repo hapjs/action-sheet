@@ -8,38 +8,37 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>ActionSheet</title>
     <script src="build/action-sheet.js"></script>
+    <style>
+        body{
+            margin: 0;
+            text-align: center;
+        }
+
+        button{
+            margin: 100px auto;
+            padding: 2em;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <p>
-        The traditional way to parse a string to a DOM fragment is to set the string as the innerHTML value of an empty DIV element, then iterate through the DIV's child nodes, appending them to a new DocumentFragment instance. Like this:
-    </p>
-
-    <button type="button" onclick="as.show()">show</button>
+    
+    <button type="button" onclick="as.show()">打开ActionSheet</button>
     
     <script>
         var as = new ActionSheet({
             buttons: {
-                '用户协议': function(e){
-                    console.info(e);
+                '重启手机': function(e){
+                    
+                    if(!confirm('确定吗？')) return;
+
+                    this.hide();
                 },
+                '跳转到百度': 'http://baidu.com/',
             }
         });
-
-        as.show();
-
-        // setTimeout(function(){
-        //     as.hide();
-        // }, 1000);
-
-        // setTimeout(function(){
-        //     as.update({
-        //         '用户协议': function(e){
-        //             console.info(e);
-        //         },
-        //         '百度': 'http://baidu.com',
-        //     }).show();
-        // }, 2000);
     </script>
 </body>
 
