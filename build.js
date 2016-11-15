@@ -5,7 +5,7 @@ var uglify = require('rollup-plugin-uglify');
 var postcss = require('rollup-plugin-postcss');
 
 rollup({
-  entry: 'src/pushbutton.js',
+  entry: 'src/action-sheet.js',
   plugins: [
     nodeResolve({
       jsnext: true
@@ -18,8 +18,8 @@ rollup({
   ]
 }).then(function (bundle) {
   bundle.write({
-    dest: 'build/pushbutton.min.js',
-    moduleName: 'Pushbutton',
+    dest: 'build/action-sheet.js',
+    moduleName: 'ActionSheet',
     format: 'umd'
   });
 });
