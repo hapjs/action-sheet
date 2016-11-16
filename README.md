@@ -4,6 +4,8 @@
 
 ![效果图](docs/action-sheet.png)
 
+[demo](https://hapjs.github.io/action-sheet/)
+
 除了构造函数ActionSheet以外，它包含以下实例方法：
 
 * [show](#show)
@@ -18,7 +20,7 @@
 npm i -DS action-sheet
 ```
 
-https://www.npmjs.com/package/action-sheet
+[npm](https://www.npmjs.com/package/action-sheet)
 
 ## 引用
 
