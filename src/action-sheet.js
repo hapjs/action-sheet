@@ -3,12 +3,12 @@ import $ from '../lib/tethys.js'
 import Tap from '../lib/tap.js'
 
 const tpl = 
-    '<div class="pb-container">\
-        <div class="pb-cover"></div>\
-        <div class="pb-buttons"></div>\
+    '<div class="as-container">\
+        <div class="as-cover"></div>\
+        <div class="as-buttons"></div>\
     </div>';
 
-const buttonTpl = '<div class="pb-button">{text}</div>';
+const buttonTpl = '<div class="as-button">{text}</div>';
 
 var ActionSheet = function(opt){
 
@@ -42,7 +42,7 @@ ActionSheet.prototype = {
             height: doc.clientHeight + 'px'
         });
 
-        bindTapEvent(this.el.find('.pb-cover')[0], this.hide.bind(this));
+        bindTapEvent(this.el.find('.as-cover')[0], this.hide.bind(this));
 
         $('body').append(this.el);
         
@@ -54,10 +54,10 @@ ActionSheet.prototype = {
 
 
         this.el.show();
-        this.el.addClass('pb-in');
+        this.el.addClass('as-in');
 
         setTimeout(function(){
-            this.el.removeClass('pb-in');
+            this.el.removeClass('as-in');
         }.bind(this), 350);
 
         return this;
@@ -66,10 +66,10 @@ ActionSheet.prototype = {
     // 隐藏
     hide: function(){
 
-        this.el.addClass('pb-out');
+        this.el.addClass('as-out');
 
         setTimeout(function(){
-            this.el.removeClass('pb-out').hide();
+            this.el.removeClass('as-out').hide();
         }.bind(this), 300);
         
         return this;
@@ -77,7 +77,7 @@ ActionSheet.prototype = {
 
     // 更新按钮
     update: function(buttons){
-        var buttonContainer = this.el.find('.pb-buttons');
+        var buttonContainer = this.el.find('.as-buttons');
 
         // 清空按钮容器
         buttonContainer.html('');
@@ -106,6 +106,13 @@ ActionSheet.prototype = {
                     location.href = this.action;
                 };
             }.bind({action: n, context: this}));
+
+            // 触摸反馈
+            btn.on('touchstart', function(e){
+                $(e.target).addClass('as-active');
+            }).on('touchend', function(e){
+                $(e.target).removeClass('as-active');
+            });
 
             // 添加到按钮容器
             buttonContainer.append(btn);

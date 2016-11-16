@@ -20,7 +20,7 @@ function __$styleInject(css, returnValue) {
   head.appendChild(style);
   return returnValue;
 }
-__$styleInject("\n.pb-container{\n    position: absolute;\n    left: 0;\n    top: 0;\n    z-index: 999999\n}\n\n.pb-cover{\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, .2);\n}\n\n.pb-buttons{\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n}\n\n.pb-button{\n    background: #FFF;\n    padding: 10px;\n    border-radius: 5px;\n    margin: 5px;\n    text-align: center;\n}\n\n\n@-webkit-keyframes pb-easein{\n\tfrom { opacity: 0; }\n\tto { opacity: 1; }\n}\n\n\n@keyframes pb-easein{\n\tfrom { opacity: 0; }\n\tto { opacity: 1; }\n}\n@-webkit-keyframes pb-easeout{\n\tfrom { opacity: 1; }\n\tto { opacity: 0; }\n}\n@keyframes pb-easeout{\n\tfrom { opacity: 1; }\n\tto { opacity: 0; }\n}\n\n.pb-in{\n    -webkit-animation: pb-easein .30s forwards;\n            animation: pb-easein .30s forwards;\n}\n.pb-out{\n    -webkit-animation: pb-easeout .30s forwards;\n            animation: pb-easeout .30s forwards;\n}\n\n@-webkit-keyframes pb-buttons-easein{\n\tfrom {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n}\n\n@keyframes pb-buttons-easein{\n\tfrom {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n}\n\n@-webkit-keyframes pb-buttons-easeout{\n\tfrom {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n}\n\n@keyframes pb-buttons-easeout{\n\tfrom {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n}\n\n.pb-in .pb-buttons{\n    -webkit-animation: pb-buttons-easein .30s forwards;\n            animation: pb-buttons-easein .30s forwards;\n}\n\n.pb-out .pb-buttons{\n    -webkit-animation: pb-buttons-easeout .30s forwards;\n            animation: pb-buttons-easeout .30s forwards;\n}",undefined);
+__$styleInject("\n.as-container{\n    position: absolute;\n    left: 0;\n    top: 0;\n    z-index: 999999\n}\n\n.as-cover{\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, .2);\n}\n\n.as-buttons{\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    width: 100%;\n}\n\n.as-button{\n    background: #FFF;\n    padding: 10px;\n    border-radius: 5px;\n    margin: 5px;\n    text-align: center;\n}\n\n.as-button.as-active{\n    opacity: .7;\n}\n\n\n@-webkit-keyframes as-easein{\n\tfrom { opacity: 0; }\n\tto { opacity: 1; }\n}\n\n\n@keyframes as-easein{\n\tfrom { opacity: 0; }\n\tto { opacity: 1; }\n}\n@-webkit-keyframes as-easeout{\n\tfrom { opacity: 1; }\n\tto { opacity: 0; }\n}\n@keyframes as-easeout{\n\tfrom { opacity: 1; }\n\tto { opacity: 0; }\n}\n\n.as-in{\n    -webkit-animation: as-easein .30s forwards;\n            animation: as-easein .30s forwards;\n}\n.as-out{\n    -webkit-animation: as-easeout .30s forwards;\n            animation: as-easeout .30s forwards;\n}\n\n@-webkit-keyframes as-buttons-easein{\n\tfrom {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n}\n\n@keyframes as-buttons-easein{\n\tfrom {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n}\n\n@-webkit-keyframes as-buttons-easeout{\n\tfrom {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n}\n\n@keyframes as-buttons-easeout{\n\tfrom {\n\t\t-webkit-transform: translate(0, 0) translateZ(0);\n\t\t        transform: translate(0, 0) translateZ(0);\n\t}\n\tto {\n\t\t-webkit-transform: translate(0, 100%) translateZ(0);\n\t\t        transform: translate(0, 100%) translateZ(0);\n\t}\n}\n\n.as-in .as-buttons{\n    -webkit-animation: as-buttons-easein .30s forwards;\n            animation: as-buttons-easein .30s forwards;\n}\n\n.as-out .as-buttons{\n    -webkit-animation: as-buttons-easeout .30s forwards;\n            animation: as-buttons-easeout .30s forwards;\n}",undefined);
 
 function keyValue(args, getter, setter){
     var attrs = {}, 
@@ -66,11 +66,9 @@ function tethys(selector, context){
     }else if(Array.isArray(selector) || selector.constructor === NodeList){
         // 包含节点的数组或NodeList
         nodes = selector;
-    }else if(selector.constructor === Node){
+    }else{
         // 节点
         nodes = [selector];
-    }else{
-        throw 'error param';
     };
 
     // 当Node被appendChild方法添加到其它元素中后，该Node会被从它所在的NodeList中移除
@@ -412,12 +410,12 @@ Tap.prototype.handleEvent = function(e) {
 };
 
 const tpl = 
-    '<div class="pb-container">\
-        <div class="pb-cover"></div>\
-        <div class="pb-buttons"></div>\
+    '<div class="as-container">\
+        <div class="as-cover"></div>\
+        <div class="as-buttons"></div>\
     </div>';
 
-const buttonTpl = '<div class="pb-button">{text}</div>';
+const buttonTpl = '<div class="as-button">{text}</div>';
 
 var ActionSheet = function(opt){
 
@@ -451,7 +449,7 @@ ActionSheet.prototype = {
             height: doc.clientHeight + 'px'
         });
 
-        bindTapEvent(this.el.find('.pb-cover')[0], this.hide.bind(this));
+        bindTapEvent(this.el.find('.as-cover')[0], this.hide.bind(this));
 
         tethys('body').append(this.el);
         
@@ -463,10 +461,10 @@ ActionSheet.prototype = {
 
 
         this.el.show();
-        this.el.addClass('pb-in');
+        this.el.addClass('as-in');
 
         setTimeout(function(){
-            this.el.removeClass('pb-in');
+            this.el.removeClass('as-in');
         }.bind(this), 350);
 
         return this;
@@ -475,10 +473,10 @@ ActionSheet.prototype = {
     // 隐藏
     hide: function(){
 
-        this.el.addClass('pb-out');
+        this.el.addClass('as-out');
 
         setTimeout(function(){
-            this.el.removeClass('pb-out').hide();
+            this.el.removeClass('as-out').hide();
         }.bind(this), 300);
         
         return this;
@@ -486,7 +484,7 @@ ActionSheet.prototype = {
 
     // 更新按钮
     update: function(buttons){
-        var buttonContainer = this.el.find('.pb-buttons');
+        var buttonContainer = this.el.find('.as-buttons');
 
         // 清空按钮容器
         buttonContainer.html('');
@@ -515,6 +513,13 @@ ActionSheet.prototype = {
                     location.href = this.action;
                 };
             }.bind({action: n, context: this}));
+
+            // 触摸反馈
+            btn.on('touchstart', function(e){
+                tethys(e.target).addClass('as-active');
+            }).on('touchend', function(e){
+                tethys(e.target).removeClass('as-active');
+            });
 
             // 添加到按钮容器
             buttonContainer.append(btn);
