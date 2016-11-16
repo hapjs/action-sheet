@@ -8,6 +8,128 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>ActionSheet</title>
     <script src="build/action-sheet.js"></script>
+    <script>
+    
+        function Tap(el) {
+            this.el = typeof el === 'object' ? el : document.getElementById(el);
+            this.moved = false;
+            this.startX = 0;
+            this.startY = 0;
+            this.hasTouchEventOccured = false;
+            this.el.addEventListener('touchstart', this, false);
+            this.el.addEventListener('mousedown', this, false);
+        }
+        
+        Tap.prototype.leftButton = function(event) {
+            if ('buttons' in event) {
+                return event.buttons === 1;
+            } else {
+                return 'which' in event ?
+                    event.which === 1 :
+                    event.button === 1;
+            }
+        };
+
+        Tap.prototype.start = function(e) {
+            if (e.type === 'touchstart') {
+
+                this.hasTouchEventOccured = true;
+                this.el.addEventListener('touchmove', this, false);
+                this.el.addEventListener('touchend', this, false);
+                this.el.addEventListener('touchcancel', this, false);
+
+            } else if (e.type === 'mousedown' && this.leftButton(e)) {
+
+                this.el.addEventListener('mousemove', this, false);
+                this.el.addEventListener('mouseup', this, false);
+            }
+
+            this.moved = false;
+            this.startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            this.startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+        };
+
+        Tap.prototype.move = function(e) {
+            var x = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            var y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+            if (Math.abs(x - this.startX) > 10 || Math.abs(y - this.startY) > 10) {
+                this.moved = true;
+            }
+        };
+
+        Tap.prototype.end = function(e) {
+            var evt;
+
+            this.el.removeEventListener('touchmove', this, false);
+            this.el.removeEventListener('touchend', this, false);
+            this.el.removeEventListener('touchcancel', this, false);
+            this.el.removeEventListener('mouseup', this, false);
+            this.el.removeEventListener('mousemove', this, false);
+
+            if (!this.moved) {
+                try {
+                    evt = new window.CustomEvent('tap', {
+                        bubbles: true,
+                        cancelable: true
+                    });
+                } catch (e) {
+                    evt = document.createEvent('Event');
+                    evt.initEvent('tap', true, true);
+                }
+
+                e.stopPropagation();
+
+                if (!e.target.dispatchEvent(evt)) {
+                    e.preventDefault();
+                }
+            }
+        };
+
+        Tap.prototype.cancel = function() {
+            this.hasTouchEventOccured = false;
+            this.moved = false;
+            this.startX = 0;
+            this.startY = 0;
+        };
+
+        Tap.prototype.destroy = function() {
+            this.el.removeEventListener('touchstart', this, false);
+            this.el.removeEventListener('touchmove', this, false);
+            this.el.removeEventListener('touchend', this, false);
+            this.el.removeEventListener('touchcancel', this, false);
+            this.el.removeEventListener('mousedown', this, false);
+            this.el.removeEventListener('mouseup', this, false);
+            this.el.removeEventListener('mousemove', this, false);
+        };
+
+        Tap.prototype.handleEvent = function(e) {
+            switch (e.type) {
+                case 'touchstart': this.start(e); break;
+                case 'touchmove': this.move(e); break;
+                case 'touchend': this.end(e); break;
+                case 'touchcancel': this.cancel(e); break;
+                case 'mousedown': this.start(e); break;
+                case 'mouseup': this.end(e); break;
+                case 'mousemove': this.move(e); break;
+            }
+        };
+        
+        // 绑定tap事件
+        function bindTapEvent(el, fn){
+            
+            if(typeof el === 'string'){
+                el = document.querySelector(el);
+            };
+
+            new Tap(el);
+
+            el.addEventListener('tap', function(e){
+                e.stopPropagation();
+                e.preventDefault();
+                this.handler();
+            }.bind({handler: fn}));
+        };
+    </script>
     <style>
         body{
             margin: 0;
@@ -41,9 +163,10 @@
             }
         });
 
-        document.getElementById('open').addEventListener('click', function(){
+        bindTapEvent('#open', function(){
             as.show();
         });
+        
     </script>
 </body>
 
