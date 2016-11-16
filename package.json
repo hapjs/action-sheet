@@ -1,10 +1,10 @@
 {
   "name": "action-sheet",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "action-sheet.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build && uglifyjs build/action-sheet.js -o build/action-sheet.min.js"
+    "build": "gulp build && uglifyjs build/action-sheet.js -o build/action-sheet.min.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/hapjs/action-sheet#readme",
   "devDependencies": {
+    "autoprefixer": "^6.5.3",
     "babel-plugin-external-helpers": "^6.8.0",
     "babel-plugin-transform-es2015-classes": "^6.18.0",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-preset-es2015": "^6.14.0",
+    "gulp": "^3.9.1",
     "rollup": "^0.34.13",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^5.0.5",

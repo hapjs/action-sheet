@@ -26,7 +26,7 @@
 
 <body>
     
-    <button type="button" onclick="as.show()">打开ActionSheet</button>
+    <button type="button" id="open">打开ActionSheet</button>
     
     <script>
         var as = new ActionSheet({
@@ -39,6 +39,10 @@
                 },
                 '跳转到百度': 'http://baidu.com/',
             }
+        });
+
+        document.getElementById('open').addEventListener('click', function(){
+            as.show();
         });
     </script>
 </body>
