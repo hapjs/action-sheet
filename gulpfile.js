@@ -5,6 +5,7 @@ var uglify = require('rollup-plugin-uglify');
 var postcss = require('rollup-plugin-postcss');
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
+var babel = require('rollup-plugin-babel');
 
 gulp.task('build', function () {
     rollup({
@@ -20,6 +21,9 @@ gulp.task('build', function () {
                     autoprefixer()
                 ],
                 extensions: ['.css'],
+            }),
+            babel({
+                exclude: 'node_modules/**'
             })
         ]
     }).then(function (bundle) {
